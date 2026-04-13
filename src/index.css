@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+/* Custom Cursor & Premium Base */
+* { cursor: none; }
+body { 
+  background-color: #050505; 
+  color: #ffffff; 
+  overflow-x: hidden; 
+  -webkit-font-smoothing: antialiased;
+}
