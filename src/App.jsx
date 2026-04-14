@@ -180,12 +180,42 @@ const PROGRAMS = [
 ];
 
 const PILLARS = [
-  { icon: Globe,       title: 'Built for India',      desc: 'Hindi-first content. Indian case studies. Real scenarios from Tier 1, 2, and 3 cities, not Silicon Valley.' },
-  { icon: Target,      title: 'Outcome First',        desc: 'Every session ends with something you can use. No fluff, no filler, no theory without application.' },
-  { icon: Brain,       title: 'AI for All Ages',      desc: 'From 16 to 70+, our curriculum adapts to your context, not the other way around.' },
-  { icon: Smartphone,  title: 'Mobile-First',         desc: 'All content runs perfectly on a ₹12,000 Android. No laptop, no camera, no desktop required.' },
-  { icon: MapPin,      title: '13-City Community',    desc: 'Learn alongside peers from your own city. Local cohorts, WhatsApp groups, city-specific meetups.' },
-  { icon: Award,       title: 'Practitioner-Led',     desc: 'Every trainer has run a business, launched a product, or deployed AI in real life, not just taught it.' },
+  { 
+    icon: Globe,       
+    title: 'Built for India',      
+    desc: 'Hindi-first content. Indian case studies. Real scenarios from Tier 1, 2, and 3 cities, not Silicon Valley.',
+    img: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=800&auto=format&fit=crop'
+  },
+  { 
+    icon: Target,      
+    title: 'Outcome First',        
+    desc: 'Every session ends with something you can use. No fluff, no filler, no theory without application.',
+    img: 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop'
+  },
+  { 
+    icon: Brain,       
+    title: 'AI for All Ages',      
+    desc: 'From 16 to 70+, our curriculum adapts to your context not the other way around.',
+    img: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=800&auto=format&fit=crop'
+  },
+  { 
+    icon: Smartphone,  
+    title: 'Mobile-First',         
+    desc: 'All content runs perfectly on a ₹12,000 Android. No laptop, no camera, no desktop required.',
+    img: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800&auto=format&fit=crop'
+  },
+  { 
+    icon: MapPin,      
+    title: '13-City Community',    
+    desc: 'Learn alongside peers from your own city. Local cohorts, WhatsApp groups, city-specific meetups.',
+    img: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?q=80&w=800&auto=format&fit=crop'
+  },
+  { 
+    icon: Award,       
+    title: 'Practitioner-Led',     
+    desc: 'Every trainer has run a business, launched a product, or deployed AI in real life, not just taught it.',
+    img: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=800&auto=format&fit=crop'
+  },
 ];
 
 const FAQS = [
@@ -1018,36 +1048,99 @@ const PillarCard = ({ pillar, index }) => {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, delay: index * 0.1, ease: customEase }}
-      whileHover={{ background: 'var(--surface2)' }}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      whileHover="hover"
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: index * 0.1, ease: customEase } }
+      }}
       data-cur
       style={{
-        background: 'var(--bg)', padding: '56px 48px',
-        transition: 'background 0.4s', cursor: 'default',
-        display: 'flex', flexDirection: 'column',
+        background: 'var(--bg)',
+        cursor: 'default',
+        display: 'flex', 
+        flexDirection: 'column',
+        position: 'relative',
+        overflow: 'hidden', 
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 40 }}>
-        <div
-          style={{
-            width: 56, height: 56, borderRadius: 8, background: 'var(--surface2)',
-            border: '1px solid var(--border)', display: 'flex', alignItems: 'center',
-            justifyContent: 'center',
+      {/* Dynamic Background Layer (Fades in on hover to avoid layout shifts) */}
+      <motion.div 
+        variants={{
+          hidden: { opacity: 0 },
+          visible: { opacity: 0 },
+          hover: { opacity: 1 }
+        }}
+        transition={{ duration: 0.4 }}
+        style={{
+          position: 'absolute', inset: 0,
+          background: 'var(--surface2)',
+          zIndex: 0
+        }}
+      />
+
+      {/* 1. The Image Container */}
+      <div style={{ height: 240, width: '100%', position: 'relative', overflow: 'hidden', zIndex: 1 }}>
+        <motion.img 
+          src={pillar.img}
+          alt={pillar.title}
+          variants={{
+            hidden: { filter: 'grayscale(100%) brightness(0.5)', scale: 1 },
+            visible: { filter: 'grayscale(100%) brightness(0.5)', scale: 1 },
+            hover: { filter: 'grayscale(0%) brightness(0.9)', scale: 1.08 }
           }}
-        >
-          <Icon size={24} color="var(--accent)" />
-        </div>
-        <div style={{ fontSize: 14, color: 'var(--dim)', letterSpacing: '0.1em', fontWeight: 600, fontFamily: 'var(--font-display)', fontStyle: 'italic' }}>
+          transition={{ duration: 0.7, ease: customEase }}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+        
+        {/* Base Gradient (Matches default background) */}
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 10%, var(--bg) 100%)' }} />
+        
+        {/* Hover Gradient (Smoothly fades in to match the lighter hover background) */}
+        <motion.div 
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 0 },
+            hover: { opacity: 1 }
+          }}
+          transition={{ duration: 0.4 }}
+          style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 10%, var(--surface2) 100%)' }} 
+        />
+        
+        {/* Floating Pillar Number */}
+        <div style={{ position: 'absolute', top: 32, right: 32, fontSize: 13, color: 'var(--text)', letterSpacing: '0.15em', fontWeight: 600, fontFamily: 'var(--font-display)', fontStyle: 'italic', zIndex: 2 }}>
           {String(index + 1).padStart(2, '0')}
         </div>
       </div>
-      
-      <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 500, lineHeight: 1.2, marginBottom: 16 }}>
-        {pillar.title}
-      </h3>
-      <p style={{ fontSize: 15, color: 'var(--muted)', lineHeight: 1.6, fontWeight: 400 }}>{pillar.desc}</p>
+
+      {/* 2. The Content Container */}
+      <div style={{ padding: '0px 48px 56px', flex: 1, display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 1 }}>
+        
+        {/* Icon Box with Interactive Border */}
+        <motion.div
+          variants={{
+            hidden: { borderColor: 'var(--border)', y: 0 },
+            visible: { borderColor: 'var(--border)', y: 0 },
+            hover: { borderColor: 'rgba(255,90,31,0.4)', y: -2 }
+          }}
+          transition={{ duration: 0.4 }}
+          style={{
+            width: 56, height: 56, borderRadius: 8, background: 'var(--bg)',
+            border: '1px solid var(--border)', display: 'flex', alignItems: 'center',
+            justifyContent: 'center', marginTop: '-28px', marginBottom: 32,
+            position: 'relative', zIndex: 10,
+            boxShadow: '0 12px 24px rgba(0,0,0,0.6)'
+          }}
+        >
+          <Icon size={24} color="var(--accent)" />
+        </motion.div>
+        
+        <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 500, lineHeight: 1.2, marginBottom: 16 }}>
+          {pillar.title}
+        </h3>
+        <p style={{ fontSize: 15, color: 'var(--muted)', lineHeight: 1.6, fontWeight: 400 }}>{pillar.desc}</p>
+      </div>
     </motion.div>
   );
 };
