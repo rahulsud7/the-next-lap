@@ -472,8 +472,8 @@ const Nav = () => {
   }, []);
 
   const links = [
-    { label: 'Programs', href: '#programs' },
     { label: "Who It's For", href: '#audience' },
+    { label: 'Programs', href: '#programs' },
     { label: 'Our Method', href: '#method' },
     { label: 'About', href: '#about' },
   ];
