@@ -506,6 +506,7 @@ const Nav = () => {
     { label: 'Programs', href: '#programs' },
     { label: 'Our Method', href: '#method' },
     { label: 'About', href: '#about' },
+    { label: 'FAQs', href: '#faqs' },
   ];
 
   return (
@@ -1443,7 +1444,7 @@ const FAQ = () => {
   const inView = useInView(ref, { once: true, margin: '-60px' });
 
   return (
-    <section style={{ background: 'var(--surface2)', padding: '140px 0' }}>
+    <section  id="faqs" style={{ background: 'var(--surface2)', padding: '140px 0' }}>
       <div className="sp" style={{ maxWidth: 960, margin: '0 auto', paddingTop: 0, paddingBottom: 0 }}>
         <motion.div
           ref={ref}
